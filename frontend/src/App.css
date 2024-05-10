@@ -1,0 +1,138 @@
+:root {
+  --black-color: #222831;
+  --dark-color: #393E46;
+  --grey-color: #EEEEEE;
+}
+
+*,
+*::before,
+*::after { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+}
+
+.App {
+  min-width: 100%;
+  background-color: var(--black-color);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-size: calc(10px + 2vmin);
+  padding: 10px 10px 0 10px;
+}
+
+.App-header {
+  background-color: var(--dark-color);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background: var(--dark-color);
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 30px;
+}
+
+.header-side {
+  margin-left: 10px;
+  margin-right: 10px;
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+}
+
+.header-link {
+  color: var(--grey-color);
+  text-decoration: none;
+  font-size: 20px;
+  padding: 0;
+  margin: 0;
+}
+
+.all-posts {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.post {
+  background: var(--dark-color);
+  border-radius: 16px;
+  padding: 16px;
+  min-width: 300px;
+}
+
+.post > h1 {
+  color: var(--grey-color);
+  font-size: 40px
+}
+
+.post > p {
+  color: var(--grey-color);
+}
+
+.form-column{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.form-block{
+  background: var(--dark-color);
+  padding: 16px;
+  width: max-content;
+  border-radius: 8px;
+}
+
+.block{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 300px;
+}
+
+.p-form{
+  color: var(--grey-color);
+  font-size: 20px;
+  padding: 0;
+  margin: 0;
+}
+
+.image-container {
+    max-width: 300px;
+    max-height: 300px;
+    overflow: hidden;
+}
+
+.product-item {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.image-container img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+.product-item img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+}
+.product-item h3,
+.product-item p {
+  margin: 0;
+}

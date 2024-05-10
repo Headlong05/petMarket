@@ -1,0 +1,6 @@
+.my-button {
+    padding: 5px;
+    border-radius: 8px;
+    background-color: var(--black-color);
+    color: var(--grey-color);
+}

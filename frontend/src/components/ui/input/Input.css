@@ -1,0 +1,12 @@
+.my-input {
+    outline:none;
+    background-color: var(--black-color);
+    border-radius: 6px;
+    border: 1px solid grey;
+    height: 35px;
+    padding: 5px;
+}
+
+input {
+    color-scheme: dark;
+  }
