@@ -1,8 +1,8 @@
 from typing import List
 from datetime import datetime
-
+from starlette.exceptions import HTTPException
 from sqlalchemy import select, and_
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 
 from schemas import market_schemas
 from sql_app.models import products
@@ -76,3 +76,39 @@ def delete_product(
 #####
 
 
+def create_basket_item(
+    market_id: int,
+    count: int,
+    db: Session
+) -> products.Basket:
+    product = db.get(products.Product, market_id)
+    if not product:
+        raise HTTPException(status_code=404, detail=f"Product with id {market_id} not found")
+        return None
+    basket_item = products.Basket(
+        market_id=market_id,
+        count=count
+    )
+    db.add(basket_item)
+    db.commit()
+    db.refresh(basket_item)
+    return basket_item
+def get_basket_items(
+    db: Session
+) -> List[products.Basket]:
+    q = select(products.Basket).options(joinedload(products.Basket.product))
+    result = db.scalars(q)
+    return result
+def get_basket_item(
+        basket_item_id: int,
+        db: Session
+) -> products.Basket:
+    q = select(products.Basket).where(products.Basket.id == basket_item_id)
+    result = db.scalar(q)
+    return result
+def delete_basket_item(
+    basket_item: products.Basket,
+    db: Session
+) -> None:
+    db.delete(basket_item)
+    db.commit()

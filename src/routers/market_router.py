@@ -97,4 +97,41 @@ async def api_delete_product(
 
 
 
+@router.post('/products/basket', response_model=market_schemas.ViewBasketItem)
+async def api_create_basket_item(
+        basket_item: market_schemas.CreateBasketItem,
+        db: Session = Depends(get_db)
+):
+    basket_instance = market_services.create_basket_item(
+        market_id=basket_item.market_id,
+        count=basket_item.count,
+        db=db
+    )
+    return basket_instance
+
+@router.get('/products/basket', response_model=List[market_schemas.ViewBasketItem])
+async def api_get_basket_items(
+        db: Session = Depends(get_db)
+):
+    basket_items = market_services.get_basket_items(db=db)
+    return basket_items
+
+
+@router.delete('/basket/{basket_item_id}', response_model=market_schemas.ViewBasketItem)
+async def api_delete_basket_item(
+        basket_item_id: int,
+        db: Session = Depends(get_db)
+):
+    basket_item = market_services.get_basket_item(basket_item_id=basket_item_id, db=db)
+    if not basket_item:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Basket item with id {basket_item_id} does not exist"
+        )
+
+    deleted_basket_item = market_services.delete_basket_item(
+        basket_item=basket_item,
+        db=db
+    )
+    return deleted_basket_item
 

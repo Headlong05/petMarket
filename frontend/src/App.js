@@ -7,6 +7,7 @@ import CreateProduct from "./pages/CreateProduct";
 import Layout from "./components/Layout";
 import ViewProduct from "./pages/ViewProduct";
 import EditProduct from "./pages/EditProduct";
+import Basket from "./pages/Basket";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/products/:product_id" element={<ViewProduct />} />
           <Route path="/create-product" element={<CreateProduct />} exact />
           <Route path="/edit-product/:product_id" element={<EditProduct />} exact />
+          <Route path="/basket" element={<Basket />} exact />
         </Routes>
       </Layout>
     </Router>

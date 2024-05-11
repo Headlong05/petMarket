@@ -15,3 +15,15 @@ class AllProduct(ViewProduct):
 
 
 
+###
+
+class CreateBasketItem(BaseModel):
+    market_id: int
+    count: int
+
+class ViewBasketItem(CreateBasketItem):
+    id: int
+    date: datetime
+
+    class Config:
+        orm_mode = True
