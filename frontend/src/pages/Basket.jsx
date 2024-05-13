@@ -8,14 +8,14 @@ const Basket = () => {
 
   useEffect(() => {
     const fetchBasketItems = async () => {
-      try {
-       const response = await axios.get(`${baseURL}basket`);
+  try {
+    const response = await axios.get(`${baseURL}products/basket`);
 
-        setBasketItems(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
+  } catch (error) {
+    console.error('Ошибка при получении товаров в корзине:', error.response.data);
+  }
+};
+
 
     fetchBasketItems();
   }, []);

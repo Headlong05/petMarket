@@ -1,7 +1,7 @@
 from typing import List
 from datetime import datetime
 from starlette.exceptions import HTTPException
-from sqlalchemy import select, and_
+from sqlalchemy import select, and_, func
 from sqlalchemy.orm import Session, joinedload
 
 from schemas import market_schemas
@@ -81,24 +81,37 @@ def create_basket_item(
     count: int,
     db: Session
 ) -> products.Basket:
-    product = db.get(products.Product, market_id)
+    product = db.query(products.Product).get(market_id)
     if not product:
         raise HTTPException(status_code=404, detail=f"Product with id {market_id} not found")
-        return None
-    basket_item = products.Basket(
-        market_id=market_id,
-        count=count
+
+    basket_item = (
+        db.query(products.Basket)
+        .filter(products.Basket.market_id == market_id)
+        .first()
     )
-    db.add(basket_item)
+
+    if basket_item:
+        basket_item.count = count
+    else:
+        basket_item = products.Basket(
+            market_id=market_id,
+            count=count
+        )
+        db.add(basket_item)
+
     db.commit()
     db.refresh(basket_item)
     return basket_item
+
+
 def get_basket_items(
     db: Session
 ) -> List[products.Basket]:
-    q = select(products.Basket).options(joinedload(products.Basket.product))
+    q = select(products.Basket)
     result = db.scalars(q)
     return result
+
 def get_basket_item(
         basket_item_id: int,
         db: Session
@@ -107,8 +120,14 @@ def get_basket_item(
     result = db.scalar(q)
     return result
 def delete_basket_item(
-    basket_item: products.Basket,
+    basket_item_id: int,
     db: Session
-) -> None:
+) -> products.Basket:
+    basket_item = get_basket_item(basket_item_id, db)
+    if not basket_item:
+        raise HTTPException(status_code=404, detail=f"Basket item with id {basket_item_id} not found")
+
     db.delete(basket_item)
     db.commit()
+    return basket_item
+

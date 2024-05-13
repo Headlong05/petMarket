@@ -9,18 +9,21 @@ const Product = ({ name, photo, price, product_id, baseURL }) => {
     setQuantity(e.target.value);
   };
 
-  const handleAddToBasket = async () => {
-    try {
-      await axios.post(`${baseURL}basket`, {
-        market_id: product_id,
-        count: quantity,
-      });
-      alert('Товар добавлен в корзину');
-    } catch (error) {
-      console.error(error);
-      alert('Ошибка при добавлении товара в корзину');
-    }
-  };
+const handleAddToBasket = async () => {
+  try {
+    const url = new URL(`${baseURL}products/basket`);
+    await axios.post(url.toString(), {
+      market_id: product_id,
+      count: quantity,
+    });
+    alert('Товар добавлен в корзину');
+  } catch (error) {
+    console.error(error);
+    alert('Ошибка при добавлении товара в корзину');
+  }
+};
+
+
 
   return (
     <div className="product-item">

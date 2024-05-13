@@ -43,8 +43,6 @@ class Basket(Base):
         default=func.now()
     )
     count: Mapped[int] = mapped_column(Integer, nullable=False)
-    product = relationship("Product", back_populates="basket_items")
-
     product: Mapped["Product"] = relationship("Product", back_populates="basket_items")
 
     __table_args__ = (
